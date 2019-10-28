@@ -3,9 +3,9 @@ import axios from "axios";
 import {
   ComposableMap,
   Geographies,
-  Geography,
-  Marker
+  Geography
 } from "react-simple-maps";
+import League from "./league";
 
 const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -18,6 +18,9 @@ const MapChart = () => {
           setMapItems(response.data);
         });
   }, []);
+
+
+
   return (
     <ComposableMap projection="geoAzimuthalEqualArea"
       projectionConfig={{
@@ -37,17 +40,13 @@ const MapChart = () => {
       </Geographies>
 
       {mapItems.map(mapItem => (
-        <Marker key={mapItem.league.country} coordinates={[mapItem.league.lng, mapItem.league.lat]}>
-            <image xlinkHref={mapItem.leader ? mapItem.leader.logo_url : ""}
-            transform={`translate(-${mapItem.size /
-                              2}, -${mapItem.size / 2})`}
-                          height={mapItem.size}
-                          width={mapItem.size}/>
-          </Marker>
+        <League mapItem={mapItem} key={mapItem.league.country}></League>
       ))}
 
     </ComposableMap>
   );
 };
+
+
 
 export default MapChart;
