@@ -1,0 +1,11 @@
+.mapImage {
+  cursor: pointer;
+}
+
+.table-container {
+  padding: 15px;
+}
+
+.table-container h5 {
+  text-align: center;
+}

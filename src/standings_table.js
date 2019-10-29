@@ -4,7 +4,8 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow
+  TableRow,
+  Typography
 } from '@material-ui/core'
 
 class StandingsTable extends React.Component {
@@ -26,8 +27,8 @@ class StandingsTable extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>{this.props.league.country + " - " + this.props.league.name}</h3>
+      <div class="table-container">
+        <Typography variant="h5">{this.props.league.country + " - " + this.props.league.name}</Typography>
         <Table>
           <TableHead>
             <TableRow>
@@ -47,10 +48,8 @@ class StandingsTable extends React.Component {
           </TableBody>
         </Table>
       </div>
-
     )
   }
-
 }
 
 export default StandingsTable;

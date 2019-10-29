@@ -19,7 +19,21 @@ const MapChart = () => {
         });
   }, []);
 
+  const [countryColors, setCountryColors] = useState([]);
+  useEffect(() => {
+    const colors = prepCountryColors(mapItems)
+    setCountryColors(colors);
+  }, [mapItems]);
 
+  const prepCountryColors = function(mapItems) {
+    const colors = mapItems.reduce(function(result, item, index) {
+      const team = item.leader ? item.leader : {};
+      const color = team.color != null ? team.color : "#9998A3";
+      result[item.league.country] = color;
+      return result
+    }, {});
+    return colors;
+  }
 
   return (
     <ComposableMap projection="geoAzimuthalEqualArea"
@@ -32,8 +46,8 @@ const MapChart = () => {
           geographies.map(geo => (
             <Geography key={geo.rsmKey}
                        geography={geo}
-                       fill="#9998A3"
-                       stroke="#fff"
+                       fill={countryColors[geo.properties.NAME] || "#9998A3"}
+                       stroke="#dcdcdf"
             />
           ))
         }

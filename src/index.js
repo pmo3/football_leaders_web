@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MapChart from "./map_chart";
+import './index.css';
 
 function App() {
   return (

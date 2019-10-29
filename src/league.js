@@ -1,9 +1,24 @@
 import React from "react";
-import { Tooltip, Popover } from "@material-ui/core";
+import {
+  Tooltip,
+  Popover,
+  createMuiTheme,
+  MuiThemeProvider,
+ } from "@material-ui/core";
 import {
   Marker
 } from "react-simple-maps";
 import StandingsTable from "./standings_table"
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: "1em",
+      }
+    }
+  }
+});
 
 class League extends React.Component {
   constructor(props) {
@@ -27,18 +42,31 @@ class League extends React.Component {
     })
   }
 
+  mapItem() {
+    return this.props.mapItem;
+  }
+
+  league() {
+    return this.mapItem().league;
+  }
+
+  tooltipTitle() {
+    return this.mapItem().leader ? this.mapItem().leader.name + " " + this.league().standings[0].points + "pts" : ""
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Marker key={this.props.mapItem.league.country} coordinates={[this.props.mapItem.league.lng, this.props.mapItem.league.lat]} onClick={(i) => this.handleClick(i)}>
-          <Tooltip title={this.props.mapItem.leader ? this.props.mapItem.leader.name + " " + this.props.mapItem.league.standings[0].points + "pts" : ""} placement="top">
-            <image xlinkHref={this.props.mapItem.leader ? this.props.mapItem.leader.logo_url : ""}
-            transform={`translate(-${this.props.mapItem.size /
-                              2}, -${this.props.mapItem.size / 2})`}
-                          height={this.props.mapItem.size}
-                          width={this.props.mapItem.size}/>
+        <Marker key={this.league().country} coordinates={[this.league().lng, this.league().lat]} onClick={(i) => this.handleClick(i)}>
+          <MuiThemeProvider theme={theme}>
+          <Tooltip title={this.tooltipTitle()} placement="top">
+            <image className="mapImage" xlinkHref={this.props.mapItem.leader ? this.props.mapItem.leader.logo_url : ""}
+            transform={`translate(-${this.mapItem().size /
+                              2}, -${this.mapItem().size / 2})`}
+                          height={this.mapItem().size}
+                          width={this.mapItem().size}/>
           </Tooltip>
-
+          </MuiThemeProvider>
         </Marker>
         <Popover
         id={this.state.id}
@@ -54,7 +82,7 @@ class League extends React.Component {
             horizontal: 'left'
           }}
         >
-        <StandingsTable standings={this.props.mapItem.league.standings} league={this.props.mapItem.league}/>
+        <StandingsTable standings={this.league().standings} league={this.league()}/>
         </Popover>
       </React.Fragment>
     )
