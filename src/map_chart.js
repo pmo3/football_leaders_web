@@ -13,7 +13,7 @@ const MapChart = () => {
   const [mapItems, setMapItems] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3090/map_items")
+    axios.get(process.env.REACT_APP_API_URL)
         .then(function(response) {
           setMapItems(response.data);
         });
