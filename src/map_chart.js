@@ -13,7 +13,7 @@ const MapChart = () => {
   const [mapItems, setMapItems] = useState([]);
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_API_URL)
+    axios.get("https://footballleaders.patrickmobrien.com/map_items")
         .then(function(response) {
           setMapItems(response.data);
         });
