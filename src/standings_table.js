@@ -27,7 +27,7 @@ class StandingsTable extends React.Component {
 
   render() {
     return (
-      <div class="table-container">
+      <div className="table-container">
         <Typography variant="h5">{this.props.league.country + " - " + this.props.league.name}</Typography>
         <Table>
           <TableHead>
